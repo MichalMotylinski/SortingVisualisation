@@ -1,32 +1,17 @@
 #include "Button.h"
-Button::Button(float pX,
-	float pY,
-	float pWidth,
-	float pHeight,
-	sf::Font* pFont,
+Button::Button(
+	sf::Vector2f pSize,
 	std::string pText,
-	sf::Color pIdleColor,
-	sf::Color pHoveredColor,
-	sf::Color pPressedColor)
+	int pTextSize,
+	sf::Color pFillColor,
+	sf::Color pTextColor)
 {
-	this->m_buttonState = IDLE;
+	m_shape.setSize(pSize);
+	m_shape.setFillColor(pFillColor);
 
-	this->m_shape.setPosition(sf::Vector2f(pX, pY));
-	this->m_shape.setSize(sf::Vector2f(pWidth, pHeight));
+	m_text.setString(pText);
+	m_text.setFillColor(pTextColor);
 
-	this->m_font = pFont;
-	this->m_text.setFont(*this->m_font);
-	this->m_text.setString(pText);
-	this->m_text.setFillColor(sf::Color::White);
-	this->m_text.setCharacterSize(12);
-	this->m_text.setPosition(
-		this->m_shape.getPosition().x / 2.f - this->m_text.getGlobalBounds().width / 2.f,
-		this->m_shape.getPosition().y / 2.f - this->m_text.getGlobalBounds().height / 2.f
-		);
-
-	this->m_idleColor = pIdleColor;
-	this->m_hoveredColor = pHoveredColor;
-	this->m_pressedColor = pPressedColor;
 }
 
 Button::~Button()
@@ -34,37 +19,52 @@ Button::~Button()
 
 }
 
-void Button::Update(sf::Vector2f pMousePos)
+void Button::SetFillColor(sf::Color pColor)
 {
-	this->m_buttonState = IDLE;
-
-	if (this->m_shape.getGlobalBounds.contains(pMousePos))
-	{
-		this->m_buttonState = HOVERED;
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			this->m_buttonState = PRESSED;
-		}
-	}
-
-	switch (this->m_buttonState)
-	{
-	case IDLE:
-		this->m_shape.setFillColor(this->m_idleColor);
-		break;
-	case HOVERED:
-		this->m_shape.setFillColor(this->m_hoveredColor);
-		break;
-	case PRESSED:
-		this->m_shape.setFillColor(this->m_pressedColor);
-		break;
-	default:
-		break;
-	}
+	m_shape.setFillColor(pColor);
 }
 
-void Button::Render(sf::RenderTarget * pTarget)
+void Button::SetPosition(sf::Vector2f pPosition)
 {
-	pTarget->draw(this->m_shape);
+	m_shape.setPosition(pPosition);
+
+	float tX = (pPosition.x + m_shape.getGlobalBounds().width) / 2 - (m_text.getGlobalBounds().width / 2);
+	float tY = (pPosition.y + m_shape.getGlobalBounds().height) / 2 - (m_text.getGlobalBounds().height / 2);
+
+	m_text.setPosition({ tX - 25, tY - 15 });
 }
+
+void Button::SetFont(sf::Font& pFont)
+{
+	m_text.setFont(pFont);
+}
+
+void Button::SetTextColor(sf::Color pColor)
+{
+	m_text.setFillColor(pColor);
+}
+
+void Button::DrawTo(sf::RenderWindow& pWindow)
+{
+	pWindow.draw(m_shape);
+	pWindow.draw(m_text);
+}
+
+bool Button::MouseOver(sf::RenderWindow& pWindow)
+{
+	float tMouseX = sf::Mouse::getPosition(pWindow).x;
+	float tMouseY = sf::Mouse::getPosition(pWindow).y;
+
+	float tShapeStartX = m_shape.getPosition().x;
+	float tShapeStartY = m_shape.getPosition().y;
+	float tShapeEndX = m_shape.getPosition().x + m_shape.getGlobalBounds().width;
+	float tShapeEndY = m_shape.getPosition().y + m_shape.getGlobalBounds().height;
+	
+	if (tShapeEndX > tMouseX && tMouseX > tShapeStartX && tShapeEndY > tMouseY && tMouseY > tShapeStartY)
+	{
+		return true;
+	}
+	return false;
+}
+
+
