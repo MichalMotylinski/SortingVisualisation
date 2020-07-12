@@ -13,6 +13,15 @@ public:
 	~App();
 
 	void SpreadElements();
+	Button* CreateButton(
+		sf::Vector2f pPosition,
+		sf::Vector2f pSize,
+		std::string pText,
+		sf::Font& pFont,
+		int pTextSize,
+		sf::Color pFillColor,
+		sf::Color pTextColor);
+	void InitButtons();
 
 	void Update();
 	void Render();
@@ -26,11 +35,13 @@ private:
 
 	sf::RectangleShape m_menu;
 	std::vector<Element*> m_elements;
+	std::vector<Button*> m_buttons;
 	Button* m_button;
 	enum
 	{
 		NONE,
-		RESET
+		RESET,
+		BUBBLE
 	};
 };
 

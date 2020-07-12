@@ -8,16 +8,16 @@ class Button
 {
 public:
 	Button(
+		sf::Vector2f pPosition,
 		sf::Vector2f pSize,
 		std::string pText,
+		sf::Font& pFont,
 		int pTextSize,
 		sf::Color pFillColor,
 		sf::Color pTextColor);
 	~Button();
 
 	void SetFillColor(sf::Color pColor);
-	void SetPosition(sf::Vector2f pPosition);
-	void SetFont(sf::Font& pFont);
 	void SetTextColor(sf::Color pColor);
 	void DrawTo(sf::RenderWindow& pWindow);
 	bool MouseOver(sf::RenderWindow& pWindow);

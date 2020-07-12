@@ -1,17 +1,27 @@
 #include "Button.h"
 Button::Button(
+	sf::Vector2f pPosition,
 	sf::Vector2f pSize,
 	std::string pText,
+	sf::Font& pFont,
 	int pTextSize,
 	sf::Color pFillColor,
 	sf::Color pTextColor)
 {
+	m_shape.setPosition(pPosition);
 	m_shape.setSize(pSize);
 	m_shape.setFillColor(pFillColor);
 
 	m_text.setString(pText);
 	m_text.setFillColor(pTextColor);
+	m_text.setFont(pFont);
 
+	m_text.setOrigin(m_text.getLocalBounds().left + m_text.getLocalBounds().width / 2.0f, m_text.getLocalBounds().top + m_text.getLocalBounds().height / 2.0f);
+
+	float tX = (m_shape.getPosition().x + m_shape.getSize().x / 2.0f);
+	float tY = (m_shape.getPosition().y + m_shape.getSize().y / 2.0f);
+	
+	m_text.setPosition({ tX, tY });
 }
 
 Button::~Button()
@@ -22,21 +32,6 @@ Button::~Button()
 void Button::SetFillColor(sf::Color pColor)
 {
 	m_shape.setFillColor(pColor);
-}
-
-void Button::SetPosition(sf::Vector2f pPosition)
-{
-	m_shape.setPosition(pPosition);
-
-	float tX = (pPosition.x + m_shape.getGlobalBounds().width) / 2 - (m_text.getGlobalBounds().width / 2);
-	float tY = (pPosition.y + m_shape.getGlobalBounds().height) / 2 - (m_text.getGlobalBounds().height / 2);
-
-	m_text.setPosition({ tX - 25, tY - 15 });
-}
-
-void Button::SetFont(sf::Font& pFont)
-{
-	m_text.setFont(pFont);
 }
 
 void Button::SetTextColor(sf::Color pColor)
