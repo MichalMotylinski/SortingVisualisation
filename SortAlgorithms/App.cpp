@@ -61,21 +61,41 @@ void App::SpreadElements()
 Button* App::CreateButton(
 	sf::Vector2f pPosition,
 	sf::Vector2f pSize,
+	int pAction,
 	std::string pText,
 	sf::Font& pFont,
 	int pTextSize,
 	sf::Color pFillColor,
 	sf::Color pTextColor)
 {
-	Button* tButton = new Button(pPosition, pSize, pText, pFont, pTextSize, pFillColor, pTextColor);
+	Button* tButton = new Button(pPosition, pSize, pAction, pText, pFont, pTextSize, pFillColor, pTextColor);
 
 	return tButton;
 }
 
 void App::InitButtons()
 {
-	m_buttons.push_back(CreateButton({ 20, 10 }, { 160, 50 }, "Reset", m_font, 20, sf::Color(150, 150, 0), sf::Color::White));
-	m_buttons.push_back(CreateButton({ 20, 80 }, { 160, 50 }, "Bubble Sort", m_font, 20, sf::Color(150, 0, 150), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 10 }, { 160, 50 }, RESET, "Reset", m_font, 20, sf::Color(125, 125, 0), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 80 }, { 160, 50 }, BUBBLE, "Bubble Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+}
+
+void App::HandleMouseButtons(sf::Mouse::Button pButton)
+{
+	switch (pButton)
+	{
+	case sf::Mouse::Left:
+	{
+		for (int i = 0; i < int(m_buttons.size()); i++)
+		{
+			if (m_buttons[i]->MouseOver(m_window))
+			{
+				SpreadElements();
+				m_buttons[i]->SetClickedColor();
+				m_buttons[i]->SetIsPressed(true);
+			}
+		}
+	}
+	}
 }
 
 void App::Update()
@@ -118,79 +138,42 @@ void App::Run()
 			{
 				for (int i = 0; i < int(m_buttons.size()); i++)
 				{
-					if (m_buttons[i]->MouseOver(m_window))
+					if (m_buttons[i]->GetIsPressed() == false)
 					{
-						std::cout << "Hovered " << i;
-
+						if (m_buttons[i]->MouseOver(m_window))
+						{
+							m_buttons[i]->SetHoveredColor();
+						}
+						else
+						{
+							m_buttons[i]->SetDefaultColor();
+						}
 					}
-
 				}
 				break;
 			}
-				
-				//if (m_button->MouseOver(m_window) && tPressed == false)
-				//{
-				//	m_button->SetFillColor(sf::Color(200, 200, 0));
-				//	break;
-				//}
-				//else if (m_button->MouseOver(m_window) && tPressed == true)
-				//{
-				//	m_button->SetFillColor(sf::Color(255, 255, 0));
-				//	break;
-				//}
-				//else
-				//{
-				//	m_button->SetFillColor(sf::Color(150, 150, 0));
-				//	break;
-				//}
 			case sf::Event::MouseButtonPressed:
+			{
+				HandleMouseButtons(tEvent.mouseButton.button);
+				break;
+			}
+			case sf::Event::MouseButtonReleased:
+			{
 				for (int i = 0; i < int(m_buttons.size()); i++)
 				{
 					if (m_buttons[i]->MouseOver(m_window))
 					{
-						SpreadElements();
-						std::cout << "Clicked " << i;
-
-						break;
-					}
-				}
-				/*if (m_button->MouseOver(m_window) && tPressed == false)
-				{
-					SpreadElements();
-					m_button->SetFillColor(sf::Color(255, 255, 0));
-					tPressed = true;
-					break;
-				}*/
-
-			/*case sf::Event::MouseButtonReleased:
-				for (int i = 0; i < int(m_buttons.size()); i++)
-				{
-					if (m_buttons[i]->MouseOver(m_window))
-					{
-						m_buttons[i]->SetFillColor(sf::Color(200, 200, 0));
-						tPressed = false;
-						break;
+						m_buttons[i]->SetHoveredColor();
+						m_buttons[i]->SetIsPressed(false);
 					}
 					else
 					{
-						m_buttons[i]->SetFillColor(sf::Color(150, 150, 0));
-						tPressed = false;
-						break;
+						m_buttons[i]->SetDefaultColor();
+						m_buttons[i]->SetIsPressed(false);
 					}
-				}*/
-
-				/*if (m_button->MouseOver(m_window))
-				{
-					m_button->SetFillColor(sf::Color(200, 200, 0));
-					tPressed = false;
-					break;
 				}
-				else
-				{
-					m_button->SetFillColor(sf::Color(150, 150, 0));
-					tPressed = false;
-					break;
-				}*/
+				break;
+			}
 			}	
 		}
 

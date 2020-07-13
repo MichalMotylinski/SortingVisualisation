@@ -2,6 +2,7 @@
 Button::Button(
 	sf::Vector2f pPosition,
 	sf::Vector2f pSize,
+	int pAction,
 	std::string pText,
 	sf::Font& pFont,
 	int pTextSize,
@@ -10,7 +11,8 @@ Button::Button(
 {
 	m_shape.setPosition(pPosition);
 	m_shape.setSize(pSize);
-	m_shape.setFillColor(pFillColor);
+	m_defaultColor = (pFillColor);
+	m_shape.setFillColor(m_defaultColor);
 
 	m_text.setString(pText);
 	m_text.setFillColor(pTextColor);
@@ -29,9 +31,74 @@ Button::~Button()
 
 }
 
-void Button::SetFillColor(sf::Color pColor)
+
+void Button::SetDefaultColor()
 {
-	m_shape.setFillColor(pColor);
+	m_shape.setFillColor(m_defaultColor);
+}
+
+void Button::SetHoveredColor()
+{
+	auto tRed = m_defaultColor.r;
+	auto tGreen = m_defaultColor.g;
+	auto tBlue = m_defaultColor.b;
+	if (tRed != 0)
+	{
+		if (tRed > 205)
+		{
+			tRed = 0;
+		}
+		tRed = tRed + 50;
+	}
+	if (tGreen != 0)
+	{
+		if (tGreen > 205)
+		{
+			tGreen = 0;
+		}
+		tGreen = tGreen + 50;
+	}
+	if (tBlue != 0)
+	{
+		if (tBlue > 205)
+		{
+			tBlue = 0;
+		}
+		tBlue = tBlue + 50;
+	}
+	m_shape.setFillColor(sf::Color(tRed, tGreen, tBlue));
+}
+
+void Button::SetClickedColor()
+{
+	auto tRed = m_shape.getFillColor().r;
+	auto tGreen = m_shape.getFillColor().g;
+	auto tBlue = m_shape.getFillColor().b;
+	if (tRed != 0)
+	{
+		if (tRed > 205)
+		{
+			tRed = 0;
+		}
+		tRed = tRed + 50;
+	}
+	if (tGreen != 0)
+	{
+		if (tGreen > 205)
+		{
+			tGreen = 0;
+		}
+		tGreen = tGreen + 50;
+	}
+	if (tBlue != 0)
+	{
+		if (tBlue > 205)
+		{
+			tBlue = 0;
+		}
+		tBlue = tBlue + 50;
+	}
+	m_shape.setFillColor(sf::Color(tRed, tGreen, tBlue));
 }
 
 void Button::SetTextColor(sf::Color pColor)

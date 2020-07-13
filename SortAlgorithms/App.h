@@ -16,12 +16,14 @@ public:
 	Button* CreateButton(
 		sf::Vector2f pPosition,
 		sf::Vector2f pSize,
+		int pAction,
 		std::string pText,
 		sf::Font& pFont,
 		int pTextSize,
 		sf::Color pFillColor,
 		sf::Color pTextColor);
 	void InitButtons();
+	void HandleMouseButtons(sf::Mouse::Button pButton);
 
 	void Update();
 	void Render();
