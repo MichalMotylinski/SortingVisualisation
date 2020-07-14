@@ -9,6 +9,7 @@ Button::Button(
 	sf::Color pFillColor,
 	sf::Color pTextColor)
 {
+	m_action = pAction;
 	m_shape.setPosition(pPosition);
 	m_shape.setSize(pSize);
 	m_defaultColor = (pFillColor);

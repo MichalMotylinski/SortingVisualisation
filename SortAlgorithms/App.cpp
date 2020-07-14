@@ -24,14 +24,14 @@ void App::SpreadElements()
 {	
 	
 	m_elements.clear();
+	int tListLenght = 40;
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < tListLenght; i++)
 	{
-		Element* tElement = new Element(20.0f, 20.0f, i);
+		Element* tElement = new Element(20.0f, 20.0f, tListLenght, m_font, m_window);
 		bool intersects = true;
 
-		tElement->SetFont(m_font);
-		tElement->SetPosition(m_window.getSize().x, m_window.getSize().y);
+		//tElement->SetRandPosition(m_window.getSize().x, m_window.getSize().y);
 
 		while (intersects && m_elements.size() > 1)
 		{
@@ -40,7 +40,7 @@ void App::SpreadElements()
 			{
 				if (tElement->GetRect().getGlobalBounds().intersects(m_elements[j]->GetRect().getGlobalBounds()))
 				{
-					tElement->SetPosition(m_window.getSize().x, m_window.getSize().y);
+					tElement->SetRandPosition(m_window.getSize().x, m_window.getSize().y);
 					intersects = true;
 					break;
 				}
@@ -89,9 +89,16 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 		{
 			if (m_buttons[i]->MouseOver(m_window))
 			{
-				SpreadElements();
 				m_buttons[i]->SetClickedColor();
 				m_buttons[i]->SetIsPressed(true);
+				if (m_buttons[i]->GetAction() == RESET)
+					SpreadElements();
+				else if (m_buttons[i]->GetAction() == BUBBLE)
+					m_Bubble.SortBubble(m_elements);
+					for (int i = 0; i < int(m_elements.size()); i++)
+					{
+						std::cout << m_elements[i]->GetNumber();
+					}
 			}
 		}
 	}

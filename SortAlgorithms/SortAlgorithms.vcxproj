@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="BubbleSort.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="main.cpp" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="BubbleSort.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Panel.h" />

@@ -25,11 +25,13 @@ public:
 
 	inline bool GetIsPressed() { return m_isPressed;  }
 	inline void SetIsPressed(bool pIsPressed) { m_isPressed = pIsPressed; }
+	inline int GetAction() { return m_action; }
 
 private:
 	sf::RectangleShape m_shape;
 	sf::Text m_text;
 	sf::Color m_defaultColor;
 	bool m_isPressed = false;
+	int m_action;
 };
 

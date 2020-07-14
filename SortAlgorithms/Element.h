@@ -4,16 +4,19 @@
 class Element
 {
 public:
-	Element(float pWidth, float pHeight, int pNum);
+	Element(float pWidth, float pHeight, int pNum, sf::Font& pFont, sf::RenderWindow& pWindow);
 	~Element();
 
+	void SetRandPosition(int pWidth, int pHeight);
 	void SetPosition(int pWidth, int pHeight);
 	void SetFont(sf::Font& pFont);
 
 	inline sf::RectangleShape& GetRect() { return m_rect; }
 	inline sf::Text& GetText() { return m_text; }
 
-	void SetNumber(int pNum) { this->m_num = pNum; }
+	void SetRandNumber();
+	void SetNumber(int pNum);
+	inline int GetNumber() { return m_num; }
 	
 private:
 	sf::RectangleShape m_rect;
