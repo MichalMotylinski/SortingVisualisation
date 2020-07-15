@@ -130,18 +130,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="BubbleSort.cpp" />
+    <ClCompile Include="Sorter.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Panel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="BubbleSort.h" />
+    <ClInclude Include="Sorter.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Element.h" />
-    <ClInclude Include="Panel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

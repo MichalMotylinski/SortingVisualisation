@@ -21,10 +21,7 @@ public:
 private:
 	sf::RectangleShape m_rect;
 	sf::Text m_text;
-
 	int m_num;
-
 	sf::Font m_font;
-	
 };
 

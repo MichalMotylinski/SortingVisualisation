@@ -34,4 +34,3 @@ private:
 	bool m_isPressed = false;
 	int m_action;
 };
-

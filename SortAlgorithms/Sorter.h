@@ -4,15 +4,11 @@
 
 #include "Element.h"
 
-class BubbleSort
+class Sorter
 {
 public:
-	BubbleSort();
-	~BubbleSort();
+	Sorter();
+	~Sorter();
 
-	void SortBubble(std::vector<Element*> &pElements);
-
-private:
-
+	void BubbleSort(std::vector<Element*> &pElements);
 };
-

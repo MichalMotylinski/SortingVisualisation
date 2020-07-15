@@ -5,7 +5,7 @@
 
 #include "Element.h"
 #include "Button.h"
-#include "BubbleSort.h"
+#include "Sorter.h"
 
 class App
 {
@@ -40,7 +40,8 @@ private:
 	std::vector<Element*> m_elements;
 	std::vector<Button*> m_buttons;
 	Button* m_button;
-	BubbleSort m_Bubble;
+	Sorter m_sorter;
+
 	enum
 	{
 		NONE,
@@ -48,4 +49,3 @@ private:
 		BUBBLE
 	};
 };
-

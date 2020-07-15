@@ -11,7 +11,7 @@ App::App(int pWidth, int pHeight)
 	m_font.loadFromFile("../Fonts/segoe-marker.ttf");
 	InitButtons();
 
-	srand(time(0));
+	srand(int(time(0)));
 	SpreadElements();
 }
 
@@ -24,14 +24,12 @@ void App::SpreadElements()
 {	
 	
 	m_elements.clear();
-	int tListLenght = 40;
+	int tListLenght = 100;
 
 	for (int i = 0; i < tListLenght; i++)
 	{
 		Element* tElement = new Element(20.0f, 20.0f, tListLenght, m_font, m_window);
 		bool intersects = true;
-
-		//tElement->SetRandPosition(m_window.getSize().x, m_window.getSize().y);
 
 		while (intersects && m_elements.size() > 1)
 		{
@@ -94,11 +92,7 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				if (m_buttons[i]->GetAction() == RESET)
 					SpreadElements();
 				else if (m_buttons[i]->GetAction() == BUBBLE)
-					m_Bubble.SortBubble(m_elements);
-					for (int i = 0; i < int(m_elements.size()); i++)
-					{
-						std::cout << m_elements[i]->GetNumber();
-					}
+					m_sorter.BubbleSort(m_elements);
 			}
 		}
 	}

@@ -1,14 +1,14 @@
-#include "BubbleSort.h"
+#include "Sorter.h"
 
-BubbleSort::BubbleSort()
+Sorter::Sorter()
 {
 }
 
-BubbleSort::~BubbleSort()
+Sorter::~Sorter()
 {
 }
 
-void BubbleSort::SortBubble(std::vector<Element*> &pElements)
+void Sorter::BubbleSort(std::vector<Element*> &pElements)
 {
 	int tLength = pElements.size();
 	bool tSwapped = true;
@@ -23,23 +23,28 @@ void BubbleSort::SortBubble(std::vector<Element*> &pElements)
 				Element* tTemp = pElements[i - 1];
 				pElements[i - 1] = pElements[i];
 				pElements[i] = (tTemp);
-
 				tSwapped = true;
 			}
-			
-			
 		}
 		
 		for (int i = 0; i < int(pElements.size()); i++)
 		{
-			std::cout << pElements[i]->GetNumber() << " ";
-			if (i < 50)
-				pElements[i]->SetPosition(i * 25.0f, 20.0f);
-			/*else
+			if (i < 25)
 			{
-				pElements[i]->SetPosition((i - 51) * 20.0f, 40.0f);
-			}*/
+				pElements[i]->SetPosition((i * 25) + 200, 50);
+			}
+			else if (i < 50)
+			{
+				pElements[i]->SetPosition(((i - 25) * 25) + 200, 80);
+			}
+			else if (i < 75)
+			{
+				pElements[i]->SetPosition(((i - 50) * 25) + 200, 110);
+			}
+			else if (i < 100)
+			{
+				pElements[i]->SetPosition(((i - 75) * 25) + 200, 140);
+			}
 		}
-		std::cout << "\n";
 	}
 }

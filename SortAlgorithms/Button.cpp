@@ -32,7 +32,6 @@ Button::~Button()
 
 }
 
-
 void Button::SetDefaultColor()
 {
 	m_shape.setFillColor(m_defaultColor);
@@ -117,7 +116,6 @@ bool Button::MouseOver(sf::RenderWindow& pWindow)
 {
 	float tMouseX = sf::Mouse::getPosition(pWindow).x;
 	float tMouseY = sf::Mouse::getPosition(pWindow).y;
-
 	float tShapeStartX = m_shape.getPosition().x;
 	float tShapeStartY = m_shape.getPosition().y;
 	float tShapeEndX = m_shape.getPosition().x + m_shape.getGlobalBounds().width;
@@ -129,5 +127,3 @@ bool Button::MouseOver(sf::RenderWindow& pWindow)
 	}
 	return false;
 }
-
-
