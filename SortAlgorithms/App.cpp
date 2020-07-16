@@ -13,6 +13,7 @@ App::App(int pWidth, int pHeight)
 
 	srand(int(time(0)));
 	SpreadElements();
+	SaveToFile();
 }
 
 App::~App()
@@ -54,6 +55,8 @@ void App::SpreadElements()
 		}
 		m_elements.push_back(tElement);
 	}
+	
+	//LoadFromFile();
 }
 
 Button* App::CreateButton(
@@ -92,10 +95,48 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				if (m_buttons[i]->GetAction() == RESET)
 					SpreadElements();
 				else if (m_buttons[i]->GetAction() == BUBBLE)
-					m_sorter.BubbleSort(m_elements);
+					//m_sorter.BubbleSort(m_elements);
+					LoadFromFile();
 			}
 		}
 	}
+	}
+}
+
+void App::SaveToFile()
+{
+	std::ofstream file;
+	std::string tData;
+	file.open("test.txt");
+	for (int i = 0; i < (int)m_elements.size(); i++)
+	{
+		if (i == 0)
+		{
+			tData = m_elements[i]->GetPosition();
+		}
+		else
+		{
+			tData = tData + "\n" + m_elements[i]->GetPosition();
+		}
+	}
+	file << tData;
+	file.close();
+}
+
+void App::LoadFromFile()
+{
+	std::ifstream file("test.txt");
+	int i = 0;
+	for ( std::string line; std::getline(file, line); )
+	{
+
+		std::istringstream sstream(line);
+		std::vector<std::string> tResults((std::istream_iterator<std::string>(sstream)), std::istream_iterator<std::string>());
+		std::cout << " " << i << " " << tResults[0] << "," << tResults[1];
+		m_elements[i]->SetNumber(std::stof(tResults[2]));
+		m_elements[i]->SetPosition(std::stof(tResults[0]), std::stof(tResults[1]));
+		
+		i++;
 	}
 }
 

@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "Element.h"
 #include "Button.h"
@@ -25,6 +27,8 @@ public:
 		sf::Color pTextColor);
 	void InitButtons();
 	void HandleMouseButtons(sf::Mouse::Button pButton);
+	void SaveToFile();
+	void LoadFromFile();
 
 	void Update();
 	void Render();

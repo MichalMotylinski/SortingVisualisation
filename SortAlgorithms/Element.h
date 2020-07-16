@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Element
 {
@@ -9,6 +10,7 @@ public:
 
 	void SetRandPosition(int pWidth, int pHeight);
 	void SetPosition(int pWidth, int pHeight);
+	std::string GetPosition();
 	void SetFont(sf::Font& pFont);
 
 	inline sf::RectangleShape& GetRect() { return m_rect; }
