@@ -28,7 +28,7 @@ public:
 	void InitButtons();
 	void HandleMouseButtons(sf::Mouse::Button pButton);
 	void SaveToFile();
-	void LoadFromFile();
+	void LoadFromFile(int pNum);
 
 	void Update();
 	void Render();
@@ -50,6 +50,10 @@ private:
 	{
 		NONE,
 		RESET,
-		BUBBLE
+		DEFAULT1,
+		DEFAULT2,
+		DEFAULT3,
+		BUBBLE,
+		MERGE
 	};
 };

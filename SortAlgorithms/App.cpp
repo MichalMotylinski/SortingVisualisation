@@ -13,7 +13,7 @@ App::App(int pWidth, int pHeight)
 
 	srand(int(time(0)));
 	SpreadElements();
-	SaveToFile();
+	//SaveToFile();
 }
 
 App::~App()
@@ -55,8 +55,6 @@ void App::SpreadElements()
 		}
 		m_elements.push_back(tElement);
 	}
-	
-	//LoadFromFile();
 }
 
 Button* App::CreateButton(
@@ -77,7 +75,11 @@ Button* App::CreateButton(
 void App::InitButtons()
 {
 	m_buttons.push_back(CreateButton({ 20, 10 }, { 160, 50 }, RESET, "Reset", m_font, 20, sf::Color(125, 125, 0), sf::Color::White));
-	m_buttons.push_back(CreateButton({ 20, 80 }, { 160, 50 }, BUBBLE, "Bubble Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 80 }, { 160, 50 }, DEFAULT1, "Default 1", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 150 }, { 160, 50 }, DEFAULT2, "Default 2", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 220 }, { 160, 50 }, DEFAULT3, "Default 3", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 290 }, { 160, 50 }, BUBBLE, "Bubble Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 360 }, { 160, 50 }, MERGE, "Merge Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 }
 
 void App::HandleMouseButtons(sf::Mouse::Button pButton)
@@ -93,10 +95,25 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				m_buttons[i]->SetClickedColor();
 				m_buttons[i]->SetIsPressed(true);
 				if (m_buttons[i]->GetAction() == RESET)
+				{
 					SpreadElements();
+				}
+				else if (m_buttons[i]->GetAction() == DEFAULT1)
+				{
+					LoadFromFile(1);
+				}
+				else if (m_buttons[i]->GetAction() == DEFAULT2)
+				{
+					LoadFromFile(2);
+				}
+				else if (m_buttons[i]->GetAction() == DEFAULT3)
+				{
+					LoadFromFile(3);
+				}
 				else if (m_buttons[i]->GetAction() == BUBBLE)
-					//m_sorter.BubbleSort(m_elements);
-					LoadFromFile();
+				{
+					m_sorter.BubbleSort(m_elements);
+				}			
 			}
 		}
 	}
@@ -107,7 +124,7 @@ void App::SaveToFile()
 {
 	std::ofstream file;
 	std::string tData;
-	file.open("test.txt");
+	file.open("test2.txt");
 	for (int i = 0; i < (int)m_elements.size(); i++)
 	{
 		if (i == 0)
@@ -123,9 +140,9 @@ void App::SaveToFile()
 	file.close();
 }
 
-void App::LoadFromFile()
+void App::LoadFromFile(int pNum)
 {
-	std::ifstream file("test.txt");
+	std::ifstream file("test" + std::to_string(pNum) + ".txt");
 	int i = 0;
 	for ( std::string line; std::getline(file, line); )
 	{
@@ -135,7 +152,6 @@ void App::LoadFromFile()
 		std::cout << " " << i << " " << tResults[0] << "," << tResults[1];
 		m_elements[i]->SetNumber(std::stof(tResults[2]));
 		m_elements[i]->SetPosition(std::stof(tResults[0]), std::stof(tResults[1]));
-		
 		i++;
 	}
 }

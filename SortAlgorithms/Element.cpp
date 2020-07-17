@@ -18,7 +18,7 @@ Element::~Element()
 
 void Element::SetRandPosition(int pWidth, int pHeight)
 {
-	m_rect.setPosition((rand() % (pWidth - 220)) + 210, (rand() % (pHeight - 20)) + 10);
+	m_rect.setPosition((rand() % (pWidth - 220)) + 200, (rand() % (pHeight - 20)));
 	float tX = (m_rect.getPosition().x + m_rect.getSize().x / 2.0f);
 	float tY = (m_rect.getPosition().y + m_rect.getSize().y / 2.0f);
 	m_text.setPosition({ tX, tY });
