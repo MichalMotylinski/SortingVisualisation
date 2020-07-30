@@ -27,6 +27,7 @@ public:
 		sf::Color pTextColor);
 	void InitButtons();
 	void HandleMouseButtons(sf::Mouse::Button pButton);
+	void MoveElements(std::vector<Element*>& pElements);
 	void SaveToFile();
 	void LoadFromFile(int pNum);
 
@@ -37,14 +38,16 @@ public:
 private:
 	sf::RenderWindow m_window;
 	sf::Time  m_updateTime;
+	sf::Clock m_sortClock;
+	sf::Time m_sortTime;
 
 	sf::Font m_font;
 
 	sf::RectangleShape m_menu;
 	std::vector<Element*> m_elements;
 	std::vector<Button*> m_buttons;
-	Button* m_button;
 	Sorter m_sorter;
+	Button* m_sortTimer;
 
 	enum
 	{

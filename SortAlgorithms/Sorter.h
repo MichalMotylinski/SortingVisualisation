@@ -11,7 +11,8 @@ public:
 	Sorter();
 	~Sorter();
 
-	void BubbleSort(std::vector<Element*> &pElements);
+	sf::Time BubbleSort(std::vector<Element*> &pElements);
+	void MergeSort(std::vector<Element*> &pElements);
 
 private:
 	sf::Clock m_clock;

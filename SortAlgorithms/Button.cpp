@@ -39,71 +39,83 @@ void Button::SetDefaultColor()
 
 void Button::SetHoveredColor()
 {
-	auto tRed = m_defaultColor.r;
-	auto tGreen = m_defaultColor.g;
-	auto tBlue = m_defaultColor.b;
-	if (tRed != 0)
+	if (m_action != 0)
 	{
-		if (tRed > 205)
+		auto tRed = m_defaultColor.r;
+		auto tGreen = m_defaultColor.g;
+		auto tBlue = m_defaultColor.b;
+		if (tRed != 0)
 		{
-			tRed = 0;
+			if (tRed > 205)
+			{
+				tRed = 0;
+			}
+			tRed = tRed + 50;
 		}
-		tRed = tRed + 50;
-	}
-	if (tGreen != 0)
-	{
-		if (tGreen > 205)
+		if (tGreen != 0)
 		{
-			tGreen = 0;
+			if (tGreen > 205)
+			{
+				tGreen = 0;
+			}
+			tGreen = tGreen + 50;
 		}
-		tGreen = tGreen + 50;
-	}
-	if (tBlue != 0)
-	{
-		if (tBlue > 205)
+		if (tBlue != 0)
 		{
-			tBlue = 0;
+			if (tBlue > 205)
+			{
+				tBlue = 0;
+			}
+			tBlue = tBlue + 50;
 		}
-		tBlue = tBlue + 50;
+		m_shape.setFillColor(sf::Color(tRed, tGreen, tBlue));
 	}
-	m_shape.setFillColor(sf::Color(tRed, tGreen, tBlue));
 }
 
 void Button::SetClickedColor()
 {
-	auto tRed = m_shape.getFillColor().r;
-	auto tGreen = m_shape.getFillColor().g;
-	auto tBlue = m_shape.getFillColor().b;
-	if (tRed != 0)
+	if (m_action != 0)
 	{
-		if (tRed > 205)
+		auto tRed = m_shape.getFillColor().r;
+		auto tGreen = m_shape.getFillColor().g;
+		auto tBlue = m_shape.getFillColor().b;
+		if (tRed != 0)
 		{
-			tRed = 0;
+			if (tRed > 205)
+			{
+				tRed = 0;
+			}
+			tRed = tRed + 50;
 		}
-		tRed = tRed + 50;
-	}
-	if (tGreen != 0)
-	{
-		if (tGreen > 205)
+		if (tGreen != 0)
 		{
-			tGreen = 0;
+			if (tGreen > 205)
+			{
+				tGreen = 0;
+			}
+			tGreen = tGreen + 50;
 		}
-		tGreen = tGreen + 50;
-	}
-	if (tBlue != 0)
-	{
-		if (tBlue > 205)
+		if (tBlue != 0)
 		{
-			tBlue = 0;
+			if (tBlue > 205)
+			{
+				tBlue = 0;
+			}
+			tBlue = tBlue + 50;
 		}
-		tBlue = tBlue + 50;
+		m_shape.setFillColor(sf::Color(tRed, tGreen, tBlue));
 	}
-	m_shape.setFillColor(sf::Color(tRed, tGreen, tBlue));
 }
 
 void Button::SetTextColor(sf::Color pColor)
 {
 	m_text.setFillColor(pColor);
+}
+
+void Button::SetText(std::string pText)
+{
+	std::cout << pText;
+	m_text.setString(pText);
 }
 
 void Button::DrawTo(sf::RenderWindow& pWindow)
@@ -114,16 +126,19 @@ void Button::DrawTo(sf::RenderWindow& pWindow)
 
 bool Button::MouseOver(sf::RenderWindow& pWindow)
 {
-	float tMouseX = sf::Mouse::getPosition(pWindow).x;
-	float tMouseY = sf::Mouse::getPosition(pWindow).y;
-	float tShapeStartX = m_shape.getPosition().x;
-	float tShapeStartY = m_shape.getPosition().y;
-	float tShapeEndX = m_shape.getPosition().x + m_shape.getGlobalBounds().width;
-	float tShapeEndY = m_shape.getPosition().y + m_shape.getGlobalBounds().height;
-	
-	if (tShapeEndX > tMouseX && tMouseX > tShapeStartX && tShapeEndY > tMouseY && tMouseY > tShapeStartY)
+	if (m_action != 0)
 	{
-		return true;
+		float tMouseX = sf::Mouse::getPosition(pWindow).x;
+		float tMouseY = sf::Mouse::getPosition(pWindow).y;
+		float tShapeStartX = m_shape.getPosition().x;
+		float tShapeStartY = m_shape.getPosition().y;
+		float tShapeEndX = m_shape.getPosition().x + m_shape.getGlobalBounds().width;
+		float tShapeEndY = m_shape.getPosition().y + m_shape.getGlobalBounds().height;
+
+		if (tShapeEndX > tMouseX && tMouseX > tShapeStartX && tShapeEndY > tMouseY && tMouseY > tShapeStartY)
+		{
+			return true;
+		}
+		return false;
 	}
-	return false;
 }

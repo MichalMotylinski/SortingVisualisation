@@ -8,6 +8,7 @@ App::App(int pWidth, int pHeight)
 {
 	m_menu.setFillColor(sf::Color(0, 100, 0));
 	
+
 	m_font.loadFromFile("../Fonts/segoe-marker.ttf");
 	InitButtons();
 
@@ -18,7 +19,13 @@ App::App(int pWidth, int pHeight)
 
 App::~App()
 {
-	delete this->m_button;
+	for (auto tElement : m_elements)
+	{
+		if (tElement != nullptr)
+		{
+			delete tElement;
+		}
+	}
 }
 
 void App::SpreadElements()
@@ -80,6 +87,9 @@ void App::InitButtons()
 	m_buttons.push_back(CreateButton({ 20, 220 }, { 160, 50 }, DEFAULT3, "Default 3", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 	m_buttons.push_back(CreateButton({ 20, 290 }, { 160, 50 }, BUBBLE, "Bubble Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 	m_buttons.push_back(CreateButton({ 20, 360 }, { 160, 50 }, MERGE, "Merge Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+
+	m_buttons.push_back(CreateButton({ 0, 730 }, { 200, 50 }, NONE, std::to_string(m_sortTime.asSeconds()), m_font, 20, sf::Color(105, 105, 105), sf::Color::White));
+
 }
 
 void App::HandleMouseButtons(sf::Mouse::Button pButton)
@@ -96,6 +106,7 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				m_buttons[i]->SetIsPressed(true);
 				if (m_buttons[i]->GetAction() == RESET)
 				{
+					m_buttons.back()->SetText("0.000000");
 					SpreadElements();
 				}
 				else if (m_buttons[i]->GetAction() == DEFAULT1)
@@ -112,11 +123,44 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				}
 				else if (m_buttons[i]->GetAction() == BUBBLE)
 				{
-					m_sorter.BubbleSort(m_elements);
-				}			
+					m_sortTime = m_sorter.BubbleSort(m_elements);
+					MoveElements(m_elements);
+					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
+
+				}
+				else if (m_buttons[i]->GetAction() == MERGE)
+				{
+					m_sortClock.restart();
+					m_sorter.MergeSort(m_elements);
+					m_sortTime = m_sortClock.getElapsedTime();
+					MoveElements(m_elements);
+				}
 			}
 		}
 	}
+	}
+}
+
+void App::MoveElements(std::vector<Element*>& pElements)
+{
+	for (int i = 0; i < int(pElements.size()); i++)
+	{
+		if (i < 25)
+		{
+			pElements[i]->SetPosition((i * 25) + 400, 50);
+		}
+		else if (i < 50)
+		{
+			pElements[i]->SetPosition(((i - 25) * 25) + 400, 80);
+		}
+		else if (i < 75)
+		{
+			pElements[i]->SetPosition(((i - 50) * 25) + 400, 110);
+		}
+		else if (i < 100)
+		{
+			pElements[i]->SetPosition(((i - 75) * 25) + 400, 140);
+		}
 	}
 }
 

@@ -20,6 +20,7 @@ public:
 	void SetHoveredColor();
 	void SetClickedColor();
 	void SetTextColor(sf::Color pColor);
+	void SetText(std::string pText);
 	void DrawTo(sf::RenderWindow& pWindow);
 	bool MouseOver(sf::RenderWindow& pWindow);
 
