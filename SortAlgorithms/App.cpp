@@ -126,14 +126,12 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 					m_sortTime = m_sorter.BubbleSort(m_elements);
 					MoveElements(m_elements);
 					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
-
 				}
 				else if (m_buttons[i]->GetAction() == MERGE)
 				{
-					m_sortClock.restart();
-					m_sorter.MergeSort(m_elements);
-					m_sortTime = m_sortClock.getElapsedTime();
+					m_sortTime = m_sorter.MergeSort(m_elements);
 					MoveElements(m_elements);
+					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
 				}
 			}
 		}
@@ -193,9 +191,9 @@ void App::LoadFromFile(int pNum)
 
 		std::istringstream sstream(line);
 		std::vector<std::string> tResults((std::istream_iterator<std::string>(sstream)), std::istream_iterator<std::string>());
-		std::cout << " " << i << " " << tResults[0] << "," << tResults[1];
-		m_elements[i]->SetNumber(std::stof(tResults[2]));
-		m_elements[i]->SetPosition(std::stof(tResults[0]), std::stof(tResults[1]));
+		//std::cout << " " << i << " " << tResults[0] << "," << tResults[1];
+		m_elements[i]->SetNumber(int(std::stof(tResults[2])));
+		m_elements[i]->SetPosition(int(std::stof(tResults[0])), int(std::stof(tResults[1])));
 		i++;
 	}
 }
