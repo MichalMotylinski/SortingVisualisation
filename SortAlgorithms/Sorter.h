@@ -13,7 +13,7 @@ public:
 
 	sf::Time BubbleSort(std::vector<Element*> &pElements);
 	sf::Time MergeSort(std::vector<Element*> &pElements);
-	void MergeMain(std::vector<Element*> &pElements, int pLeftIndex, int pRightIndex);
+	void Split(std::vector<Element*> &pElements, int pLeftIndex, int pRightIndex);
 	void Merge(std::vector<Element*> &pElements, int pLeftIndex, int pRightIndex, int pMiddle);
 
 private:
