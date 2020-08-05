@@ -9,6 +9,7 @@ Button::Button(
 	sf::Color pFillColor,
 	sf::Color pTextColor)
 {
+	// Set values based on what was submitted
 	m_action = pAction;
 	m_shape.setPosition(pPosition);
 	m_shape.setSize(pSize);
@@ -32,11 +33,13 @@ Button::~Button()
 
 }
 
+// Function to set default color of the button
 void Button::SetDefaultColor()
 {
 	m_shape.setFillColor(m_defaultColor);
 }
 
+// Function to set color of the button when hovered
 void Button::SetHoveredColor()
 {
 	if (m_action != 0)
@@ -72,6 +75,7 @@ void Button::SetHoveredColor()
 	}
 }
 
+// Function to set color of the button when clicked
 void Button::SetClickedColor()
 {
 	if (m_action != 0)
@@ -107,29 +111,32 @@ void Button::SetClickedColor()
 	}
 }
 
+// Function to set color of the button text
 void Button::SetTextColor(sf::Color pColor)
 {
 	m_text.setFillColor(pColor);
 }
 
+// Function to set the text of the button
 void Button::SetText(std::string pText)
 {
-	std::cout << pText;
 	m_text.setString(pText);
 }
 
+// Render button
 void Button::DrawTo(sf::RenderWindow& pWindow)
 {
 	pWindow.draw(m_shape);
 	pWindow.draw(m_text);
 }
 
+// Function checking if cursor is placed over the button
 bool Button::MouseOver(sf::RenderWindow& pWindow)
 {
 	if (m_action != 0)
 	{
-		float tMouseX = sf::Mouse::getPosition(pWindow).x;
-		float tMouseY = sf::Mouse::getPosition(pWindow).y;
+		float tMouseX = (float)sf::Mouse::getPosition(pWindow).x;
+		float tMouseY = (float)sf::Mouse::getPosition(pWindow).y;
 		float tShapeStartX = m_shape.getPosition().x;
 		float tShapeStartY = m_shape.getPosition().y;
 		float tShapeEndX = m_shape.getPosition().x + m_shape.getGlobalBounds().width;
@@ -139,6 +146,6 @@ bool Button::MouseOver(sf::RenderWindow& pWindow)
 		{
 			return true;
 		}
-		return false;
 	}
+	return false;
 }

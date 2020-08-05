@@ -2,6 +2,7 @@
 
 Element::Element(float pWidth, float pHeight, int pListLenght, sf::Font& pFont, sf::RenderWindow& pWindow)
 {
+	// Set element look
 	m_rect = sf::RectangleShape(sf::Vector2f(pWidth, pHeight));
 	SetRandNumber();
 	m_text.setCharacterSize(20);
@@ -16,22 +17,25 @@ Element::~Element()
 {
 }
 
+// Set random position (Used for reset and at the runtime)
 void Element::SetRandPosition(int pWidth, int pHeight)
 {
-	m_rect.setPosition((rand() % (pWidth - 220)) + 200, (rand() % (pHeight - 20)));
+	m_rect.setPosition((float)(rand() % (pWidth - 220)) + 200, (float)(rand() % (pHeight - 20)));
 	float tX = (m_rect.getPosition().x + m_rect.getSize().x / 2.0f);
 	float tY = (m_rect.getPosition().y + m_rect.getSize().y / 2.0f);
 	m_text.setPosition({ tX, tY });
 }
 
+// Set exact position (Used for default settings and sort algorithms)
 void Element::SetPosition(int pWidth, int pHeight)
 {
-	m_rect.setPosition(pWidth, pHeight);
+	m_rect.setPosition((float)pWidth, (float)pHeight);
 	float tX = (m_rect.getPosition().x + m_rect.getSize().x / 2.0f);
 	float tY = (m_rect.getPosition().y + m_rect.getSize().y / 2.0f);
 	m_text.setPosition({ tX, tY });
 }
 
+// Return position of the element
 std::string Element::GetPosition()
 {
 	sf::Vector2f tRectPosition = m_rect.getPosition();
@@ -40,16 +44,19 @@ std::string Element::GetPosition()
 	return tData;
 }
 
+// Set font of the element text
 void Element::SetFont(sf::Font& pFont)
 {
 	m_text.setFont(pFont);
 }
 
+// Set random number for the element
 void Element::SetRandNumber()
 {
 	m_num = rand() % 100;
 }
 
+// Set number for the element
 void Element::SetNumber(int pNum)
 {
 	m_num = pNum;

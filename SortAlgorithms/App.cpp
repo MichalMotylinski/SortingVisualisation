@@ -6,12 +6,13 @@ App::App(int pWidth, int pHeight)
 	, m_updateTime(sf::seconds(1.0f / 30.0f))
 	, m_menu(sf::Vector2f(200, 800))
 {
+	// Set color of the left side menu
 	m_menu.setFillColor(sf::Color(0, 100, 0));
-	
-
+	// Set font for the application
 	m_font.loadFromFile("../Fonts/segoe-marker.ttf");
+	// Initialise all buttons
 	InitButtons();
-
+	// Set random values and place elements in random positions
 	srand(int(time(0)));
 	SpreadElements();
 	//SaveToFile();
@@ -28,17 +29,20 @@ App::~App()
 	}
 }
 
+// Place elements randomly on the screen
 void App::SpreadElements()
 {	
-	
 	m_elements.clear();
 	int tListLenght = 100;
 
 	for (int i = 0; i < tListLenght; i++)
 	{
+		// Create new element
 		Element* tElement = new Element(20.0f, 20.0f, tListLenght, m_font, m_window);
 		bool intersects = true;
 
+		// Check if element will be placed on top of another element
+		// If so change its position
 		while (intersects && m_elements.size() > 1)
 		{
 			int count = 0;
@@ -64,6 +68,7 @@ void App::SpreadElements()
 	}
 }
 
+// Function creating a button
 Button* App::CreateButton(
 	sf::Vector2f pPosition,
 	sf::Vector2f pSize,
@@ -75,10 +80,10 @@ Button* App::CreateButton(
 	sf::Color pTextColor)
 {
 	Button* tButton = new Button(pPosition, pSize, pAction, pText, pFont, pTextSize, pFillColor, pTextColor);
-
 	return tButton;
 }
 
+// Initialise buttons
 void App::InitButtons()
 {
 	m_buttons.push_back(CreateButton({ 20, 10 }, { 160, 50 }, RESET, "Reset", m_font, 20, sf::Color(125, 125, 0), sf::Color::White));
@@ -89,19 +94,21 @@ void App::InitButtons()
 	m_buttons.push_back(CreateButton({ 20, 360 }, { 160, 50 }, MERGE, "Merge Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 
 	m_buttons.push_back(CreateButton({ 0, 730 }, { 200, 50 }, NONE, std::to_string(m_sortTime.asSeconds()), m_font, 20, sf::Color(105, 105, 105), sf::Color::White));
-
 }
 
+// Handle action performed when buttons are clicked
 void App::HandleMouseButtons(sf::Mouse::Button pButton)
 {
 	switch (pButton)
 	{
+	// Only left mouse button allowed
 	case sf::Mouse::Left:
 	{
 		for (int i = 0; i < int(m_buttons.size()); i++)
 		{
 			if (m_buttons[i]->MouseOver(m_window))
 			{
+				// Set appropriate color and flag it as clicked
 				m_buttons[i]->SetClickedColor();
 				m_buttons[i]->SetIsPressed(true);
 				if (m_buttons[i]->GetAction() == RESET)
@@ -139,6 +146,7 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 	}
 }
 
+// Move elements to appropriate positions when sorted
 void App::MoveElements(std::vector<Element*>& pElements)
 {
 	for (int i = 0; i < int(pElements.size()); i++)
@@ -162,6 +170,7 @@ void App::MoveElements(std::vector<Element*>& pElements)
 	}
 }
 
+// Save current elements data to file
 void App::SaveToFile()
 {
 	std::ofstream file;
@@ -182,16 +191,15 @@ void App::SaveToFile()
 	file.close();
 }
 
+// Load previously saved setting
 void App::LoadFromFile(int pNum)
 {
 	std::ifstream file("test" + std::to_string(pNum) + ".txt");
 	int i = 0;
 	for ( std::string line; std::getline(file, line); )
 	{
-
 		std::istringstream sstream(line);
 		std::vector<std::string> tResults((std::istream_iterator<std::string>(sstream)), std::istream_iterator<std::string>());
-		//std::cout << " " << i << " " << tResults[0] << "," << tResults[1];
 		m_elements[i]->SetNumber(int(std::stof(tResults[2])));
 		m_elements[i]->SetPosition(int(std::stof(tResults[0])), int(std::stof(tResults[1])));
 		i++;
@@ -204,13 +212,13 @@ void App::Update()
 
 void App::Render()
 {
+	// All elements refreshed in each frame
 	m_window.clear();
 	m_window.draw(m_menu);
 	for (int i = 0; i < int(m_buttons.size()); i++)
 	{
 		m_buttons[i]->DrawTo(m_window);
 	}
-
 	for (int i = 0; i < int(m_elements.size()); i++)
 	{
 		m_window.draw(m_elements[i]->GetRect());
@@ -232,10 +240,13 @@ void App::Run()
 		{
 			switch (tEvent.type)
 			{
+			// Close the app
 			case sf::Event::Closed:
 				m_window.close();
+			// Events when mouse is moved
 			case sf::Event::MouseMoved:
 			{
+				// Setting hovered/default color
 				for (int i = 0; i < int(m_buttons.size()); i++)
 				{
 					if (m_buttons[i]->GetIsPressed() == false)
@@ -252,11 +263,13 @@ void App::Run()
 				}
 				break;
 			}
+			// Handle button actions when any button was pressed
 			case sf::Event::MouseButtonPressed:
 			{
 				HandleMouseButtons(tEvent.mouseButton.button);
 				break;
 			}
+			// Change color when mouse button realesed 
 			case sf::Event::MouseButtonReleased:
 			{
 				for (int i = 0; i < int(m_buttons.size()); i++)
@@ -276,18 +289,14 @@ void App::Run()
 			}
 			}	
 		}
-
 		sf::Time tDeltaTime = clock.restart();
-
 		timeSinceLastUpdate += tDeltaTime;
 
 		while (timeSinceLastUpdate > m_updateTime)
 		{
 			Update();
-
 			timeSinceLastUpdate -= m_updateTime;
 		}
-
 		Render();
 	}
 }

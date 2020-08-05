@@ -25,6 +25,7 @@ public:
 		int pTextSize,
 		sf::Color pFillColor,
 		sf::Color pTextColor);
+
 	void InitButtons();
 	void HandleMouseButtons(sf::Mouse::Button pButton);
 	void MoveElements(std::vector<Element*>& pElements);
@@ -42,7 +43,6 @@ private:
 	sf::Time m_sortTime;
 
 	sf::Font m_font;
-
 	sf::RectangleShape m_menu;
 	std::vector<Element*> m_elements;
 	std::vector<Button*> m_buttons;
