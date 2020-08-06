@@ -57,6 +57,10 @@ private:
 		DEFAULT2,
 		DEFAULT3,
 		BUBBLE,
-		MERGE
+		MERGE,
+		INSERT,
+		QUICK,
+		HEAP,
+		COUNT
 	};
 };

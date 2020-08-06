@@ -121,3 +121,35 @@ void Sorter::Merge(std::vector<Element*> &pElements, int pStart, int pEnd, int p
 		pElements[tCurrentIndex++] = tRightVector[tRightIndex++];
 	}
 }
+
+sf::Time Sorter::InsertSort(std::vector<Element*>& pElements)
+{
+	m_clock.restart();
+
+	m_time = m_clock.getElapsedTime();
+	return m_time;
+}
+
+sf::Time Sorter::QuickSort(std::vector<Element*>& pElements)
+{
+	m_clock.restart();
+
+	m_time = m_clock.getElapsedTime();
+	return m_time;
+}
+
+sf::Time Sorter::HeapSort(std::vector<Element*>& pElements)
+{
+	m_clock.restart();
+
+	m_time = m_clock.getElapsedTime();
+	return m_time;
+}
+
+sf::Time Sorter::CountSort(std::vector<Element*>& pElements)
+{
+	m_clock.restart();
+
+	m_time = m_clock.getElapsedTime();
+	return m_time;
+}

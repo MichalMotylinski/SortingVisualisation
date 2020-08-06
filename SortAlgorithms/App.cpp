@@ -92,6 +92,10 @@ void App::InitButtons()
 	m_buttons.push_back(CreateButton({ 20, 220 }, { 160, 50 }, DEFAULT3, "Default 3", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 	m_buttons.push_back(CreateButton({ 20, 290 }, { 160, 50 }, BUBBLE, "Bubble Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 	m_buttons.push_back(CreateButton({ 20, 360 }, { 160, 50 }, MERGE, "Merge Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 430 }, { 160, 50 }, INSERT, "Insert Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 500 }, { 160, 50 }, QUICK, "Quick Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 570 }, { 160, 50 }, HEAP, "Heap Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
+	m_buttons.push_back(CreateButton({ 20, 640 }, { 160, 50 }, COUNT, "Counting Sort", m_font, 20, sf::Color(125, 0, 125), sf::Color::White));
 
 	m_buttons.push_back(CreateButton({ 0, 730 }, { 200, 50 }, NONE, std::to_string(m_sortTime.asSeconds()), m_font, 20, sf::Color(105, 105, 105), sf::Color::White));
 }
@@ -137,6 +141,30 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				else if (m_buttons[i]->GetAction() == MERGE)
 				{
 					m_sortTime = m_sorter.MergeSort(m_elements);
+					MoveElements(m_elements);
+					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
+				}
+				else if (m_buttons[i]->GetAction() == INSERT)
+				{
+					m_sortTime = m_sorter.InsertSort(m_elements);
+					MoveElements(m_elements);
+					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
+				}
+				else if (m_buttons[i]->GetAction() == QUICK)
+				{
+					m_sortTime = m_sorter.QuickSort(m_elements);
+					MoveElements(m_elements);
+					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
+				}
+				else if (m_buttons[i]->GetAction() == HEAP)
+				{
+					m_sortTime = m_sorter.HeapSort(m_elements);
+					MoveElements(m_elements);
+					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
+				}
+				else if (m_buttons[i]->GetAction() == COUNT)
+				{
+					m_sortTime = m_sorter.CountSort(m_elements);
 					MoveElements(m_elements);
 					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
 				}
