@@ -122,9 +122,23 @@ void Sorter::Merge(std::vector<Element*> &pElements, int pStart, int pEnd, int p
 	}
 }
 
-sf::Time Sorter::InsertSort(std::vector<Element*>& pElements)
+sf::Time Sorter::InsertSort(std::vector<Element*>& pElements, int pSize)
 {
 	m_clock.restart();
+
+
+	for (int i = 1; i < pSize; i++)
+	{
+		int tCurrentElement = pElements[i]->GetNumber();
+		int tPreviousIndex = i - 1;
+
+		while (tPreviousIndex >= 0 && pElements[tPreviousIndex]->GetNumber() > tCurrentElement)
+		{
+			pElements[tPreviousIndex + 1]->SetNumber(pElements[tPreviousIndex]->GetNumber());
+			tPreviousIndex--;
+		}
+		pElements[tPreviousIndex + 1]->SetNumber(tCurrentElement);
+	}
 
 	m_time = m_clock.getElapsedTime();
 	return m_time;

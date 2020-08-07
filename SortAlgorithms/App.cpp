@@ -122,14 +122,17 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				}
 				else if (m_buttons[i]->GetAction() == DEFAULT1)
 				{
+					m_buttons.back()->SetText("0.000000");
 					LoadFromFile(1);
 				}
 				else if (m_buttons[i]->GetAction() == DEFAULT2)
 				{
+					m_buttons.back()->SetText("0.000000");
 					LoadFromFile(2);
 				}
 				else if (m_buttons[i]->GetAction() == DEFAULT3)
 				{
+					m_buttons.back()->SetText("0.000000");
 					LoadFromFile(3);
 				}
 				else if (m_buttons[i]->GetAction() == BUBBLE)
@@ -146,7 +149,7 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				}
 				else if (m_buttons[i]->GetAction() == INSERT)
 				{
-					m_sortTime = m_sorter.InsertSort(m_elements);
+					m_sortTime = m_sorter.InsertSort(m_elements, (int)m_elements.size());
 					MoveElements(m_elements);
 					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
 				}
