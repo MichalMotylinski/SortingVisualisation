@@ -8,6 +8,8 @@ Sorter::~Sorter()
 {
 }
 
+// Function swapping elements of the vector
+
 // Bubble sort function
 sf::Time Sorter::BubbleSort(std::vector<Element*> &pElements)
 {	
@@ -30,7 +32,7 @@ sf::Time Sorter::BubbleSort(std::vector<Element*> &pElements)
 			{
 				Element* tTemp = pElements[i - 1];
 				pElements[i - 1] = pElements[i];
-				pElements[i] = (tTemp);
+				pElements[i] = tTemp;
 				tSwapped = true;
 			}
 		}
@@ -46,23 +48,23 @@ sf::Time Sorter::MergeSort(std::vector<Element*>& pElements)
 	// Restart clock
 	m_clock.restart();
 	// Begin merge sort algorithm by splitting the vector
-	Split(pElements, 0, (int)pElements.size() - 1);
+	MergeSplit(pElements, 0, (int)pElements.size() - 1);
 	// Get time elapsed since start of the algorithm and return it
 	m_time = m_clock.getElapsedTime();
 	return m_time;
 }
 
 // Merge sort splitting function
-void Sorter::Split(std::vector<Element*> &pElements, int pStart, int pEnd)
+void Sorter::MergeSplit(std::vector<Element*> &pElements, int pStart, int pEnd)
 {
 	if (pStart < pEnd)
 	{
 		// Find centre point of the list
 		int tMiddle = (pStart + pEnd) / 2;
 		// Split left side of the list
-		Split(pElements, pStart, tMiddle);
+		MergeSplit(pElements, pStart, tMiddle);
 		// Split right side of the list
-		Split(pElements, tMiddle + 1, pEnd);
+		MergeSplit(pElements, tMiddle + 1, pEnd);
 		// Sort and merge elements
 		Merge(pElements, pStart, pEnd, tMiddle);
 	}
@@ -122,16 +124,17 @@ void Sorter::Merge(std::vector<Element*> &pElements, int pStart, int pEnd, int p
 	}
 }
 
-sf::Time Sorter::InsertSort(std::vector<Element*>& pElements, int pSize)
+sf::Time Sorter::InsertSort(std::vector<Element*>& pElements)
 {
 	m_clock.restart();
+	int tSize = (int)pElements.size();
 
-
-	for (int i = 1; i < pSize; i++)
+	for (int i = 1; i < tSize; i++)
 	{
 		int tCurrentElement = pElements[i]->GetNumber();
 		int tPreviousIndex = i - 1;
 
+		// Move element to the left until its number value is higher than value of the element before it
 		while (tPreviousIndex >= 0 && pElements[tPreviousIndex]->GetNumber() > tCurrentElement)
 		{
 			pElements[tPreviousIndex + 1]->SetNumber(pElements[tPreviousIndex]->GetNumber());
@@ -146,10 +149,45 @@ sf::Time Sorter::InsertSort(std::vector<Element*>& pElements, int pSize)
 
 sf::Time Sorter::QuickSort(std::vector<Element*>& pElements)
 {
+	// Restart clock
 	m_clock.restart();
-
+	// Begin quick sort algorithm
+	QuickMain(pElements, 0, (int)pElements.size() - 1);
+	// Get time elapsed since start of the algorithm and return it
 	m_time = m_clock.getElapsedTime();
 	return m_time;
+}
+
+void Sorter::QuickMain(std::vector<Element*>& pElements, int pStart, int pEnd)
+{
+	if (pStart < pEnd)
+	{
+		int tSwapIndex = QuickSwap(pElements, pStart, pEnd);
+
+		QuickMain(pElements, pStart, tSwapIndex - 1);
+		QuickMain(pElements, tSwapIndex + 1, pEnd);
+	}
+}
+
+int Sorter::QuickSwap(std::vector<Element*>& pElements, int pStart, int pEnd)
+{
+	Element* tElement = pElements[pEnd];
+	int tLower = (pStart - 1);
+
+	for (int j = pStart; j <= pEnd - 1; j++)
+	{
+		if (pElements[j]->GetNumber() < tElement->GetNumber())
+		{
+			tLower++;
+			Element* tTemp = pElements[tLower];
+			pElements[tLower] = pElements[j];
+			pElements[j] = tTemp;
+		}
+	}
+	Element* tTemp = pElements[tLower + 1];
+	pElements[tLower + 1] = pElements[pEnd];
+	pElements[pEnd] = (tTemp);
+	return (tLower + 1);
 }
 
 sf::Time Sorter::HeapSort(std::vector<Element*>& pElements)

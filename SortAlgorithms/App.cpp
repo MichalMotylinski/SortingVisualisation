@@ -149,7 +149,7 @@ void App::HandleMouseButtons(sf::Mouse::Button pButton)
 				}
 				else if (m_buttons[i]->GetAction() == INSERT)
 				{
-					m_sortTime = m_sorter.InsertSort(m_elements, (int)m_elements.size());
+					m_sortTime = m_sorter.InsertSort(m_elements);
 					MoveElements(m_elements);
 					m_buttons.back()->SetText(std::to_string(m_sortTime.asSeconds()));
 				}
