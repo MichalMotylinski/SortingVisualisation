@@ -174,10 +174,12 @@ int Sorter::QuickSwap(std::vector<Element*>& pElements, int pStart, int pEnd)
 	Element* tElement = pElements[pEnd];
 	int tLower = (pStart - 1);
 
+	// Loop through all elements in the given sub-group
 	for (int j = pStart; j <= pEnd - 1; j++)
 	{
 		if (pElements[j]->GetNumber() < tElement->GetNumber())
 		{
+			// Swap elements if current element from the loop is lower than element that we check for
 			tLower++;
 			Element* tTemp = pElements[tLower];
 			pElements[tLower] = pElements[j];
